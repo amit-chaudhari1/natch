@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "227474928952",
+    "firebase_url": "https://ladki-patao-f3c8a.firebaseio.com",
+    "project_id": "ladki-patao-f3c8a",
+    "storage_bucket": "ladki-patao-f3c8a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:227474928952:android:703144d63515580b69bdcd",
+        "android_client_info": {
+          "package_name": "com.natch.natch"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "227474928952-7uqu84a130ump7pe90q9e45mqpl139rr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.natch.natch",
+            "certificate_hash": "680a67fe37369ee853655491870a0bad41d0cc0c"
+          }
+        },
+        {
+          "client_id": "227474928952-6oljvk6e1si13b8kmjed69ag60c143la.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtIOjbA2LEdyR7DI9RZcqa4Kzn8jEvQ_o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "227474928952-6oljvk6e1si13b8kmjed69ag60c143la.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
