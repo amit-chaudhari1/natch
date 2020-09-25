@@ -33,7 +33,6 @@ class SerializedFormBloc extends FormBloc<String, String> {
     toJson: (value) => value.toUtc().toIso8601String(),
   );
 
-  final photo = 
 
   SerializedFormBloc() {
     addFieldBlocs(
@@ -43,7 +42,6 @@ class SerializedFormBloc extends FormBloc<String, String> {
         birthDate,
       ],
     );
-  }
 
   @override
   void onSubmitting() async {
@@ -54,7 +52,7 @@ class SerializedFormBloc extends FormBloc<String, String> {
       ),
     );
   }
-}
+};
 
 class SerializedForm extends StatelessWidget {
   @override
