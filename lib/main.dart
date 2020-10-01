@@ -1,7 +1,7 @@
 import 'dart:html';
-
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
+import 'interfaces/registration_UI.dart';
 
 void main() {
   runApp(SplashScreen());
@@ -23,6 +23,7 @@ class SplashScreen extends StatefulWidget {
     } else {
       //First time
       prefs.setBool('first_time', false);
+
       //run REGISTRATION.dart
     }
   }
