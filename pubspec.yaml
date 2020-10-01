@@ -31,10 +31,6 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  #thisis for the initial Ap signup
-  flutter_form_bloc: ^0.19.0
-  #this is for tha navigation bar
-  curved_navigation_bar: ^0.1.2 #latest version
   #firebaes_core library
   firebase_core: ^0.4.0+9
   #ANALYTICS LIBRARIES ____
@@ -43,7 +39,11 @@ dev_dependencies:
   # For example, to use Firebase Authentication and Cloud Firestore
   firebase_auth: ^0.14.0+5
   cloud_firestore: ^0.12.9+5
-
+  #stream improvement includes observable datatype.
+  rxdart: ^0.24.1
+  geohash: ^0.2.1
+  shared_preferences: ^0.5.4+6
+  
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter.
