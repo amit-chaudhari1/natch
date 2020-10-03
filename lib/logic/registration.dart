@@ -9,58 +9,35 @@ import 'package:path/path.dart';
 //import '../databases/user_info.dart';
 
 final firestoreInstance = Firestore.instance;
+String userId;
 //question about this scope of instance
 // this logic is only called if shared pref value for firstime is true.
 //firebase instance initiated.
-registeredUserFireStore(name, age, sex, pp) async {
-  String user;
+registeredUserFireStore(name, age, sex, pp, ppPath) async {
   firestoreInstance.collection("Users").add({
     'name': name,
     'age': age,
     'sex': sex,
-    //'photo': photo // you can't handle the photos.
-  }).then((id) async* {
-    //id is the unique document id that firestore will generate ,
-    SharedPreferences userInfo = await SharedPreferences.getInstance();
-    await userInfo.setString('name', name);
-    await userInfo.setInt('age', age);
-    await userInfo.setString('sex', sex);
-    //await userInfo.setString('photo', photo);
-    await userInfo.setString('id', id.documentID);
-    user = id.documentID;
-
-    print(id.documentID);
-
-    print(id.documentID);
-    print("MUJHS SE HO KE GAYE HO");
-    print(id.documentID);
-    print(id.documentID);
-    print(id.documentID);
-    print(id.documentID);
-    print(id.documentID);
-    print(id.documentID);
-    print(id.documentID);
-    print(id.documentID);
-    print(id.documentID);
-    print(id.documentID);
-    //we are going to identify unique users based on this id.
+  }).then((id) {
+    // print(id.documentID);
+    userId = id.documentID;
   });
+
+  SharedPreferences userInfo = await SharedPreferences.getInstance();
+  await userInfo.setString('name', name);
+  await userInfo.setInt('age', age);
+  await userInfo.setString('sex', sex);
+  await userInfo.setString('photopath', ppPath);
+  await userInfo.setString('id', userId);
   StorageReference storageReference =
-      FirebaseStorage().ref().child("Users/${user}_profile_pic.png");
+      FirebaseStorage().ref().child("Users/${userId}_profile_pic.png");
   StorageUploadTask uploadTask = storageReference.putFile(pp);
   StorageTaskSnapshot snapshot = await uploadTask.onComplete;
+  var downloadUrl = await (await uploadTask.onComplete).ref.getDownloadURL();
+  //Add url to the user's collection.
+  firestoreInstance
+      .collection("Users")
+      .document(userId)
+      .updateData({'ProfileURL': downloadUrl});
   return snapshot.storageMetadata.path;
 }
-
-// Future uploadProfilePicture(File pp, String ppPath) async {
-//   StorageReference fireBaseStorageRef =
-//       FirebaseStorage.instance.ref().child(ppPath);
-//   StorageUploadTask uploadTask = fireBaseStorageRef.putFile(pp);
-//   StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
-// }
-
-//RegisterUSEr.
-//firestore data upload stream.
-
-// Generate a v1 (time-based) id
-// NewUserInfo user = NewUserInfo();

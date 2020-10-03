@@ -25,8 +25,6 @@ class _TextFormState extends State<TextForm> {
     if (image != null) {
       var cropped = await ImageCropper.cropImage(
         sourcePath: image.path,
-        maxHeight: 100,
-        maxWidth: 100,
         aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),
         cropStyle: CropStyle.circle,
         compressQuality: 100,
@@ -140,7 +138,7 @@ class _TextFormState extends State<TextForm> {
         FlatButton(
           child: const Text("Register"),
           onPressed: () => {
-            registeredUserFireStore(name, age, gender, _image),
+            registeredUserFireStore(name, age, gender, _image, _imagePath),
           },
         )
       ],
