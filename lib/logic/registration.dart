@@ -14,7 +14,7 @@ String userId;
 // this logic is only called if shared pref value for firstime is true.
 //firebase instance initiated.
 registeredUserFireStore(name, age, sex, pp, ppPath) async {
-  firestoreInstance.collection("Users").add({
+  await firestoreInstance.collection("Users").add({
     'name': name,
     'age': age,
     'sex': sex,
@@ -22,13 +22,14 @@ registeredUserFireStore(name, age, sex, pp, ppPath) async {
     // print(id.documentID);
     userId = id.documentID;
   });
-
+  //assign shared prefences.
   SharedPreferences userInfo = await SharedPreferences.getInstance();
   await userInfo.setString('name', name);
   await userInfo.setInt('age', age);
   await userInfo.setString('sex', sex);
   await userInfo.setString('photopath', ppPath);
   await userInfo.setString('id', userId);
+
   StorageReference storageReference =
       FirebaseStorage().ref().child("Users/${userId}_profile_pic.png");
   StorageUploadTask uploadTask = storageReference.putFile(pp);
