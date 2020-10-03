@@ -12,7 +12,8 @@ final firestoreInstance = Firestore.instance;
 //question about this scope of instance
 // this logic is only called if shared pref value for firstime is true.
 //firebase instance initiated.
-void registeredUserFireStore(name, age, sex) {
+registeredUserFireStore(name, age, sex, pp) async {
+  String user;
   firestoreInstance.collection("Users").add({
     'name': name,
     'age': age,
@@ -26,18 +27,37 @@ void registeredUserFireStore(name, age, sex) {
     await userInfo.setString('sex', sex);
     //await userInfo.setString('photo', photo);
     await userInfo.setString('id', id.documentID);
+    user = id.documentID;
+
+    print(id.documentID);
+
+    print(id.documentID);
+    print("MUJHS SE HO KE GAYE HO");
+    print(id.documentID);
+    print(id.documentID);
+    print(id.documentID);
+    print(id.documentID);
+    print(id.documentID);
+    print(id.documentID);
+    print(id.documentID);
+    print(id.documentID);
+    print(id.documentID);
     print(id.documentID);
     //we are going to identify unique users based on this id.
   });
+  StorageReference storageReference =
+      FirebaseStorage().ref().child("Users/${user}_profile_pic.png");
+  StorageUploadTask uploadTask = storageReference.putFile(pp);
+  StorageTaskSnapshot snapshot = await uploadTask.onComplete;
+  return snapshot.storageMetadata.path;
 }
 
-Future uploadProfilePicture(pp) async {
-  String fileName = basename(pp.path);
-  StorageReference fireBaseStorageRef =
-      FirebaseStorage.instance.ref().child(fileName);
-  StorageUploadTask uploadTask = fireBaseStorageRef.putFile(pp);
-  StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
-}
+// Future uploadProfilePicture(File pp, String ppPath) async {
+//   StorageReference fireBaseStorageRef =
+//       FirebaseStorage.instance.ref().child(ppPath);
+//   StorageUploadTask uploadTask = fireBaseStorageRef.putFile(pp);
+//   StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
+// }
 
 //RegisterUSEr.
 //firestore data upload stream.

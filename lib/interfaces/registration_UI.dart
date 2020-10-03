@@ -3,6 +3,8 @@ import 'dart:io';
 import '../logic/registration.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:shared_preferences/shared_preferences.dart'; //why?
 
 //textfield widget
 class TextForm extends StatefulWidget {
@@ -11,45 +13,63 @@ class TextForm extends StatefulWidget {
 }
 
 class _TextFormState extends State<TextForm> {
-  final picker = ImagePicker();
   var age = 18;
   String name;
   List genderOptions = ["Male", "Female"];
   String gender;
-  PickedFile imageFile;
-  pickImageFromGallery(ImageSource source) {
-    setState(() async {
-      imageFile = await picker.getImage(source: ImageSource.gallery);
-    });
+  File _image; //upload this to firebasestorage.
+  String _imagePath;
+
+  Future _getImage() async {
+    var image = await ImagePicker().getImage(source: ImageSource.gallery);
+    if (image != null) {
+      var cropped = await ImageCropper.cropImage(
+        sourcePath: image.path,
+        maxHeight: 100,
+        maxWidth: 100,
+        aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),
+        cropStyle: CropStyle.circle,
+        compressQuality: 100,
+      );
+      this.setState(() {
+        _image = cropped;
+      });
+      saveImage(_image.path);
+    }
   }
 
-  //showIMagefunction
+  void saveImage(path) async {
+    SharedPreferences saveimage = await SharedPreferences.getInstance();
+    saveimage.setString('imagepath', path);
+  }
+
   Widget showImage() {
-    return FutureBuilder<File>(
-      builder: (BuildContext context, AsyncSnapshot<File> snapshot) {
-        if (true) {
-          return CircleAvatar(
-            radius: 85.0,
-            child: CircleAvatar(
-              //padding: const EdgeInsets.all(8.0),
-              backgroundColor: Colors.blue,
-              backgroundImage: NetworkImage(
-                  'https://m.media-amazon.com/images/M/MV5BOThhZTkxMWMtY2UyYS00MTdlLTk1ZmMtZWQ0OWFkZjE2YTA1XkEyXkFqcGdeQXVyMjU0ODI4MzY@._V1_UX172_CR0,0,172,256_AL_.jpg'),
-              radius: 84,
-            ),
-          );
-        } else if (snapshot.error != null) {
-          return const Text(
-            "Error Picking the Image.",
-            textAlign: TextAlign.center,
-          );
-        } else {
-          return const Text(
-            "No Image was picked.",
-            textAlign: TextAlign.center,
-          );
-        }
-      },
+    return GestureDetector(
+      onTap: _getImage,
+      child: Container(
+        //padding: EdgeInsets.all(2),
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: Colors.white,
+            width: 5.0,
+          ),
+          shape: BoxShape.circle,
+        ),
+
+        child: _imagePath != null
+            ? CircleAvatar(
+                backgroundImage: FileImage(File(_imagePath)),
+                radius: 60,
+              )
+            : CircleAvatar(
+                backgroundImage: _image != null
+                    ? FileImage(_image)
+                    : AssetImage(
+                        'assets/images/Splash.jpg'), // Generic user image
+                backgroundColor: Colors.blue[200],
+                radius: 60,
+              ),
+      ),
     );
   }
 
@@ -85,12 +105,6 @@ class _TextFormState extends State<TextForm> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               showImage(),
-              IconButton(
-                icon: Icon(Icons.add_circle),
-                onPressed: () {
-                  pickImageFromGallery(ImageSource.gallery);
-                },
-              )
             ],
           ),
         ),
@@ -126,8 +140,7 @@ class _TextFormState extends State<TextForm> {
         FlatButton(
           child: const Text("Register"),
           onPressed: () => {
-            registeredUserFireStore(name, age, gender),
-            uploadProfilePicture(imageFile)
+            registeredUserFireStore(name, age, gender, _image),
           },
         )
       ],
