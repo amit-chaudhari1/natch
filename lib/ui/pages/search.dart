@@ -5,7 +5,7 @@ import 'package:chill/ui/widgets/iconWidget.dart';
 import 'package:chill/ui/widgets/profile.dart';
 import 'package:chill/ui/widgets/userGender.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+//import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -134,8 +134,9 @@ class _SearchState extends State<Search> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: <Widget>[
-                        iconWidget(EvaIcons.flash, () {}, size.height * 0.04,
-                            Colors.yellow),
+                        // iconWidget(EvaIcons.flash, () {}, size.height * 0.04,
+                        //     Colors.yellow),
+                        //TODO: make the ICons match and look more complementary
                         iconWidget(Icons.clear, () {
                           _searchBloc
                               .add(PassUserEvent(widget.userId, _user.uid));
@@ -149,8 +150,8 @@ class _SearchState extends State<Search> {
                                 selectedUserId: _user.uid),
                           );
                         }, size.height * 0.06, Colors.red),
-                        iconWidget(EvaIcons.options2, () {}, size.height * 0.04,
-                            Colors.white)
+                        // iconWidget(EvaIcons.options2, () {}, size.height * 0.04,
+                        //     Colors.white)
                       ],
                     )
                   ],

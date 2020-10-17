@@ -38,7 +38,7 @@ class Tabs extends StatelessWidget {
           appBar: AppBar(
             centerTitle: true,
             title: Text(
-              "Chill",
+              "Natch",
               style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
             ),
             actions: <Widget>[
